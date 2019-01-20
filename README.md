@@ -21,7 +21,7 @@ Of course with High Quality Video and Audio. made with youtube-dl & google api y
 ### Get Project
 - Download .zip or get project module by 
 ```git
-git clone https://github.com/MadeYoga/youtubepy.git
+git clone https://github.com/MadeYoga/ytpy.git
 ```
 - Copy `ytpy` folder to your project folder
 
