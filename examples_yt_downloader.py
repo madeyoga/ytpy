@@ -1,7 +1,6 @@
-import subprocess
-import sys
 from ytpy.youtube import YoutubeService
 import os
+import sys
 
 key, threads = sys.argv[1], sys.argv[2]
 print("searching for: " + key)
@@ -30,6 +29,6 @@ picked_entry_numbers = input('Choose video to download: ').split(" ")
 for entry_number in picked_entry_numbers:
     video = search_result[int(entry_number) - 1]
     print('Downloading {}...'.format(video.title))
-    # ys.download(video.url, threads)
+    ys.download(video.url, threads)
 
-print('Downloaded {} videos.'.format(len(picked_entry_numbers) - download_failed))
+print('Downloaded {} videos.'.format(len(picked_entry_numbers)))

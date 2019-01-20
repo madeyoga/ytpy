@@ -1,7 +1,7 @@
 from apiclient.discovery import build
 from oauth2client.tools import argparser
 import sys
-import subprocess
+from subprocess import call
 import youtube_dl as ytdl
 
 class YoutubeVideo:
@@ -25,7 +25,6 @@ class YoutubeService:
                 except Exception as e:
                     print("Required a DEVELOPER_KEY!")
                     sys.exit(1)
-                pass
         self.max_results = max_results
         self.YOUTUBE_API_SERVICE_NAME = "youtube"
         self.YOUTUBE_API_VERSION = "v3"
@@ -55,13 +54,13 @@ class YoutubeService:
     def download(self, video_url="", threads=2):
         meta = ytdl.YoutubeDL({}).extract_info(video_url, download=False)
         # print(meta['formats'])
-        for format in meta['formats']:
-            if format['format_note'] == '720p':
+        for fmt in meta['formats']:
+            if fmt['format_note'] == '720p':
                 quality = '136'
-            elif format['format_note'] == '1080p':
+            elif fmt['format_note'] == '1080p':
                 quality = '137'
         try:
-            subprocess.call([
+            call([
                 "youtube-dl",
                 "-f " + quality + "+171",
                 video_url,
@@ -73,4 +72,3 @@ class YoutubeService:
         except Exception as e:
             print("failed to download {}".format(video_url))
             print(e)
-            pass
