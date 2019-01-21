@@ -5,10 +5,10 @@ from subprocess import call
 import youtube_dl as ytdl
 
 class YoutubeVideo:
-    def __init__(self, title="", url="", thumbnail="", description=""):
-        self.title     = title
+    def __init__(self, title="", url="", thumbnails={}, description=""):
+        self.title      = title
         self.url        = url
-        self.thumbnail  = thumbnail
+        self.thumbnails = thumbnails
         self.desc       = description
 
 class YoutubeService:
@@ -42,12 +42,17 @@ class YoutubeService:
         ).execute()
         list_of_videos = []
         for search_result in search_response.get("items", []):
-            if search_result['id']['kind'] == 'youtube#video':
+            if search_result['id']['kind'] == 'youtube#video': # #video #playlist #channel
                 url = "http://www.youtube.com/watch?v=" + search_result['id']['videoId']
                 title = search_result['snippet']['title']
-                # search_result['snippet']['thumbnails']['high'] # medium/low
-                # search_result['snippet']['description']
-                vid = YoutubeVideo(title=title, url=url)
+                thumbnails = search_result['snippet']['thumbnails'] # high/medium/default
+                desc = search_result['snippet']['description']
+                vid = YoutubeVideo(
+                    title=title,
+                    url=url,
+                    thumbnails=thumbnails,
+                    description=desc
+                    )
                 list_of_videos.append(vid)
         return list_of_videos
 
