@@ -12,7 +12,7 @@ class YoutubeVideo:
         self.desc       = description
 
 class YoutubeService:
-    def __init__(self, max_results=10, dev_key=""):
+    def __init__(self, dev_key=""):
         if dev_key != "":
             self.DEVELOPER_KEY = dev_key
         else:
@@ -25,7 +25,6 @@ class YoutubeService:
                 except Exception as e:
                     print("Required a DEVELOPER_KEY!")
                     sys.exit(1)
-        self.max_results = max_results
         self.YOUTUBE_API_SERVICE_NAME = "youtube"
         self.YOUTUBE_API_VERSION = "v3"
         self.youtube = build(
@@ -34,11 +33,11 @@ class YoutubeService:
             developerKey=self.DEVELOPER_KEY
             )
 
-    def search(self, search_key):
+    def search(self, keyword, max_results=7):
         search_response = self.youtube.search().list(
-            q=search_key,
+            q=keyword,
             part="id,snippet",
-            maxResults=self.max_results
+            maxResults=max_results
         ).execute()
         list_of_videos = []
         for search_result in search_response.get("items", []):
