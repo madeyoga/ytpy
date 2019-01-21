@@ -16,13 +16,11 @@ except Exception as e:
 
 ## Build Youtube Service Object
 ys = YoutubeService()
-## search video with keyword
+## search video by keyword
 search_result = ys.search(keyword=key, max_results=10)
 
 for i, r in enumerate(search_result):
     print("{}. {} - {}".format(i + 1, r.title, r.url))
-    # print(r.desc)
-    # print(r.thumbnails)
 
 print("\neg. input `1 2 4 7`, this will download video with entry number 1 2 4 7")
 picked_entry_numbers = input('Choose video to download: ').split(" ")
