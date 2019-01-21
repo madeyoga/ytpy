@@ -5,6 +5,7 @@
 
 Python module for youtube services. Simple but fast `download` speed and fast `search` response. 
 Of course with High Quality Video and Audio. made with youtube-dl & google api youtube data v3. 
+The purpose of this project is to make it easier for developers to extract data from YouTube.
 
 ## Requirements
 - Python 3.x
@@ -35,22 +36,19 @@ There are some ways for `YoutubeService` object to use/access your `Google Crede
 - by `dev_key`param
 ```py
 # in your_script.py
-ys = YoutubeService(
-  dev_key='put your Google Credential Api key here',
-  max_results=7
-  )
+ys = YoutubeService(dev_key='put your Google Credential Api key here')
 ```
 - by Environment. Create an environment variable called 'DEVELOPER_KEY' and put your credential api key in it.
 - by `config.py` . Create a new file called `config.py` at `youtube.py` module directory (inside `ytpy` folder).
 and your put `DEVELOPER_KEY` there.
 
-in `config.py`
+`config.py`
 ```py
 DEVELOPER_KEY = "put your Google Credential API key here"
 ```
 Build `YoutubeService` Object in `your_script.py`, if you're using `Environment` or `config` method
 ```py
-ys = YoutubeService(max_results=7)
+ys = YoutubeService()
 ```
 
 ### Search and Download Video
@@ -58,7 +56,7 @@ It's really simple to search and downloads videos, just use `search` and `downlo
 ```py
 # Search videos by keywords
 keywords='Jennie - SOLO'
-search_result = ys.search(keywords)
+search_result = ys.search(keyword=keywords, max_results=10)
 
 # Print output
 for i, video in enumerate(search_result):
