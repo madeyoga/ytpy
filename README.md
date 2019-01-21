@@ -5,6 +5,7 @@
 
 Python module for youtube services. Simple but fast `download` speed and fast `search` response. 
 Of course with High Quality Video and Audio. made with youtube-dl & google api youtube data v3. 
+The purpose of this project is to make it easier for developers to extract data from YouTube.
 
 ## Requirements
 - Python 3.x
