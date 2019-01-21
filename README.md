@@ -1,4 +1,4 @@
-# youtubepy
+# ytpy
 [![CodeFactor](https://www.codefactor.io/repository/github/madeyoga/ytpy/badge)](https://www.codefactor.io/repository/github/madeyoga/ytpy)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MadeYoga/youtubepy/issues)
 [![Discord Badge](https://discordapp.com/api/guilds/458296099049046018/embed.png)](https://discord.gg/Y8sB4ay)
@@ -6,21 +6,21 @@
 Python module for youtube services. Simple but fast `download` speed and fast `search` response. 
 Of course with High Quality Video and Audio. made with youtube-dl & google api youtube data v3. 
 
+## Requirements
+- Python 3.x
+- [FFmpeg](https://www.ffmpeg.org/download.html)
+- [Get Google API' Credential 'API KEY'](https://developers.google.com/youtube/registering_an_application)
+
 ## Dependencies
 - google-api-python-client
 - google-auth
 - google-auth-httplib2
 - [youtube-dl](https://github.com/rg3/youtube-dl)
 
-## Requirements
-- Python 3.x
-- [FFmpeg](https://www.ffmpeg.org/download.html)
-- [Get Google API' Credential 'API KEY'](https://developers.google.com/youtube/registering_an_application)
-
 ## Usage
 ### Get Project
 - Download .zip or get project module by 
-```git
+```
 git clone https://github.com/MadeYoga/ytpy.git
 ```
 - Copy `ytpy` folder to your project folder
@@ -31,7 +31,7 @@ git clone https://github.com/MadeYoga/ytpy.git
 from ytpy.youtube import YoutubeService
 ```
 ### Build YoutubeService Object
-- There are some ways `YoutubeService` object can use/access your `Google Credential API key`. 
+There are some ways for `YoutubeService` object to use/access your `Google Credential API key`. 
 - by `dev_key`param
 ```py
 # in your_script.py
@@ -54,7 +54,7 @@ ys = YoutubeService(max_results=7)
 ```
 
 ### Search and Download Video
-- It's really simple to search and downloads videos, just use `search` and `download` method :)
+It's really simple to search and downloads videos, just use `search` and `download` method :)
 ```py
 # Search videos by keywords
 keywords='Jennie - SOLO'
