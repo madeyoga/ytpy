@@ -73,13 +73,12 @@ for video in search_result:
 from ytpy.youtube import YoutubeService
 
 ys = YoutubeService(
-  dev_key='put your Google Credential Api key here',
-  max_results=7
+  dev_key='put your Google Credential Api key here'
   )
 
 # Search videos by keywords
 keywords='Jennie - SOLO'
-search_result = ys.search(keywords)
+search_result = ys.search(keywords, max_results=10)
 
 # Print output
 for i, video in enumerate(search_result):
