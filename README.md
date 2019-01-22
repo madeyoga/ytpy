@@ -1,6 +1,6 @@
 # ytpy
 [![CodeFactor](https://www.codefactor.io/repository/github/madeyoga/ytpy/badge)](https://www.codefactor.io/repository/github/madeyoga/ytpy)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MadeYoga/youtubepy/issues)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MadeYoga/ytpy/issues)
 [![Discord Badge](https://discordapp.com/api/guilds/458296099049046018/embed.png)](https://discord.gg/Y8sB4ay)
 
 Python module for youtube services. Simple but fast `download` speed and fast `search` response. 
@@ -73,13 +73,12 @@ for video in search_result:
 from ytpy.youtube import YoutubeService
 
 ys = YoutubeService(
-  dev_key='put your Google Credential Api key here',
-  max_results=7
+  dev_key='put your Google Credential Api key here'
   )
 
 # Search videos by keywords
 keywords='Jennie - SOLO'
-search_result = ys.search(keywords)
+search_result = ys.search(keywords, max_results=10)
 
 # Print output
 for i, video in enumerate(search_result):
