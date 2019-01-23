@@ -21,7 +21,6 @@ class YoutubeService:
                 self.DEVELOPER_KEY = config.DEVELOPER_KEY
             except Exception as e:
                 raise ValueError('Required DEVELOPER_KEY, please set it on environment variable.')
-                sys.exit(1)
         self.YOUTUBE_API_SERVICE_NAME = "youtube"
         self.YOUTUBE_API_VERSION = "v3"
         self.youtube = build(
