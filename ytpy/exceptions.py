@@ -1,0 +1,2 @@
+class DevKeyNotFoundError(Exception):
+    pass
