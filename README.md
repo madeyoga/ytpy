@@ -91,38 +91,6 @@ ys.download(search_result[0].url)
 for video in search_result:
   ys.download(video.url)
 ```
-## Run youtube_downloader_example
-- Open command prompt and change directory to the project path
-```
-C:/.../>cd 'project path'
-```
-- Syntax is `python example_script.py [keywords] [threads]`
-```
-C:/.../>python example_yt_downloader.py "forever young" 1
-```
-Command above will search videos from youtube with keywords "forever young"
-```
-C:/.../>python example_yt_downloader.py "forever young" 1
-searching for: forever young
-1. BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.) - http://www.youtube.com/watch?v=89kTb73csYg
-2. BLACKPINK - 'FOREVER YOUNG' LYRICS (Color Coded Eng/Rom/Han) - http://www.youtube.com/watch?v=7PrxONon7jg
-3. BLACKPINK - ‘FOREVER YOUNG’ 0805 SBS Inkigayo - http://www.youtube.com/watch?v=5hwepTxNKtE
-4. BLACKPINK - ‘FOREVER YOUNG’ 0617 SBS Inkigayo - http://www.youtube.com/watch?v=n7ukhNJvQ8s
-5. BLACKPINK - ‘FOREVER YOUNG’ 0722 SBS Inkigayo - http://www.youtube.com/watch?v=PMsBMoc9eFg
-6. 【TVPP】BLACKPINK - Forever Young, 블랙핑크 – Forever Young @Show music core - http://www.youtube.com/watch?v=gH0weQOpW04
-7. Alphaville - Forever Young ~Official Video - http://www.youtube.com/watch?v=t1TcDHrkQYg
-
-eg. input `1 2 4 7`, this will download video with entry number 1 2 4 7
-Choose video to download: 1
-Downloading BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.)...
-[youtube] 89kTb73csYg: Downloading webpage
-[youtube] 89kTb73csYg: Downloading video info webpage
-[youtube] 89kTb73csYg: Downloading webpage
-[youtube] 89kTb73csYg: Downloading video info webpage
-WARNING: Requested formats are incompatible for merge and will be merged into mkv.
-[download] Destination: BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.)-89kTb73csYg.f137.mp4
-[download]   9.2% of 45.16MiB at 162.40KiB/s ETA 04:18
-```
 
 ### Asynchronous 
 Use `AioYoutubeService` object for asynchronous tasks. Its quite the same as `YoutubeService` Object. 
@@ -162,4 +130,37 @@ async def main():
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
+```
+
+## Run youtube_downloader_example
+- Open command prompt and change directory to the project path
+```
+C:/.../>cd 'project path'
+```
+- Syntax is `python example_script.py [keywords] [threads]`
+```
+C:/.../>python example_yt_downloader.py "forever young" 1
+```
+Command above will search videos from youtube with keywords "forever young"
+```
+C:/.../>python example_yt_downloader.py "forever young" 1
+searching for: forever young
+1. BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.) - http://www.youtube.com/watch?v=89kTb73csYg
+2. BLACKPINK - 'FOREVER YOUNG' LYRICS (Color Coded Eng/Rom/Han) - http://www.youtube.com/watch?v=7PrxONon7jg
+3. BLACKPINK - ‘FOREVER YOUNG’ 0805 SBS Inkigayo - http://www.youtube.com/watch?v=5hwepTxNKtE
+4. BLACKPINK - ‘FOREVER YOUNG’ 0617 SBS Inkigayo - http://www.youtube.com/watch?v=n7ukhNJvQ8s
+5. BLACKPINK - ‘FOREVER YOUNG’ 0722 SBS Inkigayo - http://www.youtube.com/watch?v=PMsBMoc9eFg
+6. 【TVPP】BLACKPINK - Forever Young, 블랙핑크 – Forever Young @Show music core - http://www.youtube.com/watch?v=gH0weQOpW04
+7. Alphaville - Forever Young ~Official Video - http://www.youtube.com/watch?v=t1TcDHrkQYg
+
+eg. input `1 2 4 7`, this will download video with entry number 1 2 4 7
+Choose video to download: 1
+Downloading BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.)...
+[youtube] 89kTb73csYg: Downloading webpage
+[youtube] 89kTb73csYg: Downloading video info webpage
+[youtube] 89kTb73csYg: Downloading webpage
+[youtube] 89kTb73csYg: Downloading video info webpage
+WARNING: Requested formats are incompatible for merge and will be merged into mkv.
+[download] Destination: BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.)-89kTb73csYg.f137.mp4
+[download]   9.2% of 45.16MiB at 162.40KiB/s ETA 04:18
 ```
