@@ -148,7 +148,8 @@ class AioYoutubeService(BaseYoutubeAPI):
         async with aiohttp.ClientSession() as session:
             response = await session.get(url)
             search_results = await response.json()
-            if raw: return search_results
+            if raw or part!='snippet':
+                return search_results
             videos = []
             for item in search_results['items']:
                 if item['id']['kind'] == 'youtube#video':
