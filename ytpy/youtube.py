@@ -5,6 +5,7 @@ from subprocess import call
 import youtube_dl as ytdl
 import asyncio
 import aiohttp
+import requests
 if __name__ == '__main__':
     from exceptions import DevKeyNotFoundError
 else:
@@ -40,10 +41,11 @@ class BaseYoutubeAPI:
 class YoutubeVideo:
     """Represents youtube's videos attributes."""
 
-    def __init__(self, title="", url="", thumbnails={}, description=""):
+    def __init__(self, title="", url="", thumbnails={}, duration="", description=""):
         self.title      = title
         self.url        = url
         self.thumbnails = thumbnails
+        self.duration   = duration
         self.desc       = description
 
     def __str__(self):
@@ -78,10 +80,14 @@ class YoutubeService(BaseYoutubeAPI):
                 title = search_result['snippet']['title']
                 thumbnails = search_result['snippet']['thumbnails'] # high/medium/default
                 desc = search_result['snippet']['description']
+                url_detail = '{}/videos?id={}&part=contentDetails&key={}'.format(__BASE_URL__, search_result['id']['videoId'], self.DEVELOPER_KEY)
+                response = requests.get(url_detail)
+                response = response.json()
                 vid = YoutubeVideo(
                     title=title,
                     url=url,
                     thumbnails=thumbnails,
+                    duration=response['items'][0]['contentDetails']['duration'],
                     description=desc
                     )
                 list_of_videos.append(vid)
@@ -153,11 +159,15 @@ class AioYoutubeService(BaseYoutubeAPI):
             videos = []
             for item in search_results['items']:
                 if item['id']['kind'] == 'youtube#video':
+                    url_detail = '{}/videos?id={}&part=contentDetails&key={}'.format(__BASE_URL__, item['id']['videoId'], self.DEVELOPER_KEY)
+                    response = await session.get(url_detail)
+                    vid_details = await response.json()
                     video_url = "http://www.youtube.com/watch?v=" + item['id']['videoId']
                     ytvid = YoutubeVideo(
                         title=item['snippet']['title'],
                         url=video_url,
                         thumbnails=item['snippet']['thumbnails'],
+                        duration=vid_details['items'][0]['contentDetails']['duration'],
                         description=item['snippet']['description']
                         )
                     videos.append(ytvid)
