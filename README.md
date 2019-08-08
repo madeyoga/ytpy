@@ -3,9 +3,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MadeYoga/aio-ytpy/issues)
 [![Discord Badge](https://discordapp.com/api/guilds/458296099049046018/embed.png)](https://discord.gg/Y8sB4ay)
 
-Python module for youtube services. Simple but fast `download` speed and fast `search` response. 
-Of course with High Quality Video and Audio. made with youtube-dl & google api youtube data v3. 
-The purpose of this project is to make it easier for developers to extract data from YouTube.
+Python wrapper for youtube data api v3. Simple *asynchronous* wrapper to fetch youtube video or playlist data.
 
 ## Requirements
 - Python 3.x
