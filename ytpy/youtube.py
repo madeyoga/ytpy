@@ -140,7 +140,7 @@ class AioYoutubeService(BaseYoutubeAPI):
     def __init__(self, dev_key=''):
         super(AioYoutubeService, self).__init__(dev_key=dev_key)
 
-    async def search(self, q='', part='snippet', raw=False, max_results=7):
+    async def search(self, q='', part='snippet', raw=True, max_results=7):
         """Search video by keywords & parts
         url: GET {BASE_URL}/search/?q=q&part=part
 
