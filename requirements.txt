@@ -1,4 +1,6 @@
 google-api-python-client
 google-auth
 google-auth-httplib2
+oauth2client
+aiohttp
 youtube-dl
