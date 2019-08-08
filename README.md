@@ -14,6 +14,8 @@ Python wrapper for youtube data api v3. Simple *asynchronous* wrapper to fetch y
 - google-api-python-client
 - google-auth
 - google-auth-httplib2
+- oauth2client
+- aiohttp
 - [youtube-dl](https://github.com/rg3/youtube-dl)
 
 ## Usage
