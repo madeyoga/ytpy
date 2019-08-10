@@ -27,7 +27,7 @@ git clone https://github.com/MadeYoga/ytpy.git
 ```
 - Copy `ytpy` folder to your project folder
 
-- importing module from your script.
+- import module.
 ```py
 # depends on where you put the package/module
 from ytpy.youtube import YoutubeService
@@ -39,10 +39,10 @@ Use `AioYoutubeService` object for asynchronous tasks. Its quite the same as `Yo
 You can pass your api key on `dev_key` param when building the object or just set your api key on environment and `AioYoutubeService` object will automatically get it for you.
 ```py
 # will automatically search and get your api key from environment.
-_ays = AioYoutubeService()
+ayt = AioYoutubeService()
 
 # you can also pass it on dev_key param.
-_ays = AioYoutubeService(dev_key='replace me')
+ayt = AioYoutubeService(dev_key='replace me')
 ```
 ### Asynchronous Search
 params:
@@ -52,23 +52,25 @@ params:
 
 Example `Search` method
 ```py
-ays = AioYoutubeService(dev_key='replace me')
-# youtube search machine learning 
-response = await ays.search(q='machine learning', part='snippet')
-# output
-for video in response:
-  print(str(video))
+  ayt = AioYoutubeService()
+  # test search
+  results = await ayt.search(q="kpop song", search_type="video", max_results=3)
+  print(results['items'][0])
 ```
 
 ### Example Asynchronous
 ```py
 async def main():
-    ays = AioYoutubeService()
-    response = await ays.search(q='machine learning', part='snippet')
-    for video in response:
-        print(str(video))
-    response = await ays.search(q='machine learning', part='snippet', raw=True)
-    print(response) # raw true
+  ayt = AioYoutubeService()
+
+  # test search
+  results = await ayt.search(q="super junior blacksuit", search_type="video", max_results=3)
+  print(results['items'][0])
+
+  # test get_playlist
+  results = await ayt.get_playlist(max_results=10, playlist_id="PL6GZjIxGO0cOBYqybD7-nNiA-vjF09wpC")
+  for item in results['items']:
+      print(item['snippet']['title'], item['snippet']['resourceId']['videoId'])
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
@@ -133,37 +135,4 @@ ys.download(search_result[0].url)
 # Download all search_result videos
 for video in search_result:
   ys.download(video.url)
-```
-
-## Run youtube_downloader_example
-- Open command prompt and change directory to the project path
-```
-C:/.../>cd 'project path'
-```
-- Syntax is `python example_script.py [keywords] [threads]`
-```
-C:/.../>python example_yt_downloader.py "forever young" 1
-```
-Command above will search videos from youtube with keywords "forever young"
-```
-C:/.../>python example_yt_downloader.py "forever young" 1
-searching for: forever young
-1. BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.) - http://www.youtube.com/watch?v=89kTb73csYg
-2. BLACKPINK - 'FOREVER YOUNG' LYRICS (Color Coded Eng/Rom/Han) - http://www.youtube.com/watch?v=7PrxONon7jg
-3. BLACKPINK - ‘FOREVER YOUNG’ 0805 SBS Inkigayo - http://www.youtube.com/watch?v=5hwepTxNKtE
-4. BLACKPINK - ‘FOREVER YOUNG’ 0617 SBS Inkigayo - http://www.youtube.com/watch?v=n7ukhNJvQ8s
-5. BLACKPINK - ‘FOREVER YOUNG’ 0722 SBS Inkigayo - http://www.youtube.com/watch?v=PMsBMoc9eFg
-6. 【TVPP】BLACKPINK - Forever Young, 블랙핑크 – Forever Young @Show music core - http://www.youtube.com/watch?v=gH0weQOpW04
-7. Alphaville - Forever Young ~Official Video - http://www.youtube.com/watch?v=t1TcDHrkQYg
-
-eg. input `1 2 4 7`, this will download video with entry number 1 2 4 7
-Choose video to download: 1
-Downloading BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.)...
-[youtube] 89kTb73csYg: Downloading webpage
-[youtube] 89kTb73csYg: Downloading video info webpage
-[youtube] 89kTb73csYg: Downloading webpage
-[youtube] 89kTb73csYg: Downloading video info webpage
-WARNING: Requested formats are incompatible for merge and will be merged into mkv.
-[download] Destination: BLACKPINK - 'Forever Young' DANCE PRACTICE VIDEO (MOVING VER.)-89kTb73csYg.f137.mp4
-[download]   9.2% of 45.16MiB at 162.40KiB/s ETA 04:18
 ```
