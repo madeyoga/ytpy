@@ -31,6 +31,7 @@ git clone https://github.com/MadeYoga/ytpy.git
 ```py
 # depends on where you put the package/module
 from ytpy.youtube import YoutubeService
+from ytpy.youtube import AioYoutubeService
 ```
 
 ### Asynchronous Youtube Service Object
