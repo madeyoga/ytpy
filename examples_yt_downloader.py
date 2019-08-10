@@ -6,7 +6,7 @@ key, threads = sys.argv[1], sys.argv[2]
 print("searching for: " + key)
 
 ## download video destination / path
-os.chdir(r'C:\Users\MYPC\Desktop\Nano_clone\myYoutubeDownloader\video')
+os.chdir(r'C:\...\video')
 
 try:
     int(threads)
