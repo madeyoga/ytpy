@@ -135,24 +135,23 @@ class AioYoutubeService(BaseYoutubeAPI):
 
     @staticmethod
     async def create_session():
-        return await aiohttp.ClientSession()
+        return aiohttp.ClientSession()
 
     def __init__(self, dev_key=''):
         super(AioYoutubeService, self).__init__(dev_key=dev_key)
 
-    async def search(self, q='', part='snippet', raw=True, max_results=7):
-        """Search video by keywords & parts
-        url: GET {BASE_URL}/search/?q=q&part=part
-
-        params:
-        q       ->  stands for query, search key. default: empty string
+    async def search(self, q='', search_type='video', part='snippet', max_results=7, video_category="10"):
+        """Youtube search
+        url: GET {BASE_URL}/search/?q=q&part=part&
+        params (*)
+        q       ->  stands for query, search key. default: empty string.
         part    ->  snippet, contentDetails, player, statistics, status. default: snippet
-        raw     ->  returns json type object, raw from the api response. default: False
-
-        returns a list of YoutubeVideo Object
+        type    ->  types: 'video', 'playlist', 'channel'. default: video.
+        video_category -> 10: Music.
+        returns a json response from youtube data api v3.
         """
 
-        url = "{}/search/?q={}&part={}&key={}&maxResults={}".format(__BASE_URL__, q, part, self.DEVELOPER_KEY, max_results)
+        url = "{}/search/?key={}&q={}&type={}&part={}&maxResults={}".format(__BASE_URL__, self.DEVELOPER_KEY, q, search_type, part, max_results)
         async with aiohttp.ClientSession() as session:
             response = await session.get(url)
             search_results = await response.json()
@@ -172,12 +171,14 @@ class AioYoutubeService(BaseYoutubeAPI):
 # TESTS
 if __name__ == '__main__':
     async def main():
-        ays = AioYoutubeService()
-        response = await ays.search(q='super junior blacksuit', part='snippet')
-        for video in response:
-            print(str(video))
+        ayt = AioYoutubeService()
         
-        results = await ays.get_playlist(max_results=10, playlist_id="PL6GZjIxGO0cOBYqybD7-nNiA-vjF09wpC")
+        # test search
+        results = await ayt.search(q="super junior blacksuit", search_type="video", max_results=3)
+        print(results['items'][0])
+
+        # test get_playlist
+        results = await ayt.get_playlist(max_results=10, playlist_id="PL6GZjIxGO0cOBYqybD7-nNiA-vjF09wpC")
         for item in results['items']:
             print(item['snippet']['title'], item['snippet']['resourceId']['videoId'])
 
