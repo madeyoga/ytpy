@@ -1,10 +1,9 @@
 # ytpy
-[![CodeFactor](https://www.codefactor.io/repository/github/madeyoga/aio-ytpy/badge)](https://www.codefactor.io/repository/github/madeyoga/aio-ytpy)
+[![CodeFactor](https://www.codefactor.io/repository/github/madeyoga/ytpy/badge)](https://www.codefactor.io/repository/github/madeyoga/ytpy)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MadeYoga/aio-ytpy/issues)
 [![Discord Badge](https://discordapp.com/api/guilds/458296099049046018/embed.png)](https://discord.gg/Y8sB4ay)
 
-Python module for youtube services. Simple but fast `download` speed and fast `search` response. 
-Of course with High Quality Video and Audio. made with youtube-dl & google api youtube data v3. 
+Python wrapper for youtube data api v3. Simple *asynchronous* wrapper to get youtube video or playlist data.
 The purpose of this project is to make it easier for developers to extract data from YouTube.
 
 ## Requirements
@@ -16,6 +15,8 @@ The purpose of this project is to make it easier for developers to extract data 
 - google-api-python-client
 - google-auth
 - google-auth-httplib2
+- oauth2client
+- aiohttp
 - [youtube-dl](https://github.com/rg3/youtube-dl)
 
 ## Usage
@@ -30,8 +31,50 @@ git clone https://github.com/MadeYoga/ytpy.git
 ```py
 # depends on where you put the package/module
 from ytpy.youtube import YoutubeService
+from ytpy.youtube import AioYoutubeService
 ```
-### Build YoutubeService Object (Synchronous)
+
+### Asynchronous Youtube Service Object
+Use `AioYoutubeService` object for asynchronous tasks. Its quite the same as `YoutubeService` Object. 
+You can pass your api key on `dev_key` param when building the object or just set your api key on environment and `AioYoutubeService` object will automatically get it for you.
+```py
+# will automatically search and get your api key from environment.
+_ays = AioYoutubeService()
+
+# you can also pass it on dev_key param.
+_ays = AioYoutubeService(dev_key='replace me')
+```
+### Asynchronous Search
+params:
+- `q`, string. Search key. default: empty string.
+- `part`, string. Valid parts: snippet, contentDetails, player, statistics, status. default: snippet.
+- `type`, string. Valid types: video, playlist, channel.
+
+Example `Search` method
+```py
+ays = AioYoutubeService(dev_key='replace me')
+# youtube search machine learning 
+response = await ays.search(q='machine learning', part='snippet')
+# output
+for video in response:
+  print(str(video))
+```
+
+### Example Asynchronous
+```py
+async def main():
+    ays = AioYoutubeService()
+    response = await ays.search(q='machine learning', part='snippet')
+    for video in response:
+        print(str(video))
+    response = await ays.search(q='machine learning', part='snippet', raw=True)
+    print(response) # raw true
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
+```
+
+### Synchronous YoutubeService Object
 There are some ways for `YoutubeService` object to use/access your `Google Credential API key`. 
 - by `dev_key`param
 ```py
@@ -90,46 +133,6 @@ ys.download(search_result[0].url)
 # Download all search_result videos
 for video in search_result:
   ys.download(video.url)
-```
-
-### Asynchronous 
-Use `AioYoutubeService` object for asynchronous tasks. Its quite the same as `YoutubeService` Object. 
-You can pass your api key on `dev_key` param when building the object or just set your api key on environment and `AioYoutubeService` object will automatically get it for you.
-```py
-# will automatically search and get your api key from environment.
-_ays = AioYoutubeService()
-
-# you can also pass it on dev_key param.
-_ays = AioYoutubeService(dev_key='replace me')
-```
-### Asynchronous Search
-params:
-- `q`, string. Search key. default: empty string
-- `part`, string. Valid parts: snippet, contentDetails, player, statistics, status. default: snippet.
-- `raw`, boolean. If true then returns json type object, raw from the api response. If False then returns a list of `YoutubeVideo` object. default: False.
-
-Example `Search` method
-```py
-ays = AioYoutubeService(dev_key='replace me')
-# youtube search machine learning 
-response = await ays.search(q='machine learning', part='snippet')
-# output
-for video in response:
-  print(str(video))
-```
-
-### Example Asynchronous
-```py
-async def main():
-    ays = AioYoutubeService()
-    response = await ays.search(q='machine learning', part='snippet')
-    for video in response:
-        print(str(video))
-    response = await ays.search(q='machine learning', part='snippet', raw=True)
-    print(response) # raw true
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
 ```
 
 ## Run youtube_downloader_example
