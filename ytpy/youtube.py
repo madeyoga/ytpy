@@ -156,24 +156,7 @@ class AioYoutubeService(BaseYoutubeAPI):
         async with aiohttp.ClientSession() as session:
             response = await session.get(url)
             search_results = await response.json()
-            if raw or part!='snippet':
-                return search_results
-            videos = []
-            for item in search_results['items']:
-                if item['id']['kind'] == 'youtube#video':
-                    url_detail = '{}/videos?id={}&part=contentDetails&key={}'.format(__BASE_URL__, item['id']['videoId'], self.DEVELOPER_KEY)
-                    response = await session.get(url_detail)
-                    vid_details = await response.json()
-                    video_url = "http://www.youtube.com/watch?v=" + item['id']['videoId']
-                    ytvid = YoutubeVideo(
-                        title=item['snippet']['title'],
-                        url=video_url,
-                        thumbnails=item['snippet']['thumbnails'],
-                        duration=vid_details['items'][0]['contentDetails']['duration'],
-                        description=item['snippet']['description']
-                        )
-                    videos.append(ytvid)
-            return videos
+        return search_results
 
     async def get_playlist(self, part="snippet", max_results=7, playlist_id="", playlist_url=""):
         """fetch playlist items
