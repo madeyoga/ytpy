@@ -104,9 +104,9 @@ _ays = AioYoutubeService(dev_key='replace me')
 ```
 ### Asynchronous Search
 params:
-- `q`, string. Search key. default: empty string
+- `q`, string. Search key. default: empty string.
 - `part`, string. Valid parts: snippet, contentDetails, player, statistics, status. default: snippet.
-- `raw`, boolean. If true then returns json type object, raw from the api response. If False then returns a list of `YoutubeVideo` object. default: False.
+- `type`, string. Valid types: video, playlist, channel.
 
 Example `Search` method
 ```py
