@@ -35,7 +35,7 @@ from ytpy.youtube import AioYoutubeService
 
 ### Asynchronous Youtube Service Object
 Use `AioYoutubeService` object for asynchronous tasks.
-You can pass your api key on `dev_key` param when building the object or just set your api key on environment and `AioYoutubeService` object will automatically get it for you.
+You can pass your api key on `dev_key` param when building the object or just set your api key on environment (DEVELOPER_KEY) and `AioYoutubeService` object will automatically get it for you.
 ```py
 # will automatically search and get your api key from environment.
 ayt = AioYoutubeService()
