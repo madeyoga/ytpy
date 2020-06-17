@@ -41,13 +41,20 @@ class BaseYoutubeAPI:
 class YoutubeVideo:
     """Represents youtube's videos attributes."""
 
-    def __init__(self, title="", url="", thumbnails={}, duration="", description=""):
+    def __init__(self, json_=None, title="", url="", thumbnails={}, duration="", description=""):
         self.title      = title
         self.url        = url
         self.thumbnails = thumbnails
         self.duration   = duration
         self.desc       = description
 
+    def parse(self, json_):
+        self.title = json_['snippet']['title']
+        self.url = "http://www.youtube.com/watch?v=" + json_['id']['videoId']
+        self.thumbnails = json_['snippet']['thumbnails']
+        self.desc = json_['snippet']['description']
+        return self
+    
     def __str__(self):
         object_to_string = "{} -- {}\n{}\n".format(self.title, self.url, self.desc)
         return object_to_string
@@ -175,12 +182,13 @@ if __name__ == '__main__':
         
         # test search
         results = await ayt.search(q="super junior blacksuit", search_type="video", max_results=3)
-        print(results['items'][0])
-
-        # test get_playlist
-        results = await ayt.get_playlist(max_results=10, playlist_id="PL6GZjIxGO0cOBYqybD7-nNiA-vjF09wpC")
         for item in results['items']:
-            print(item['snippet']['title'], item['snippet']['resourceId']['videoId'])
+            vid = YoutubeVideo().parse(item)
+            print(vid)
+        # test get_playlist
+##        results = await ayt.get_playlist(max_results=10, playlist_id="PL6GZjIxGO0cOBYqybD7-nNiA-vjF09wpC")
+##        for item in results['items']:
+##            print(item['snippet']['title'], item['snippet']['resourceId']['videoId'])
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
