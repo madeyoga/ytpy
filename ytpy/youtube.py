@@ -6,6 +6,8 @@ import youtube_dl as ytdl
 import asyncio
 import aiohttp
 import requests
+import urllib
+
 if __name__ == '__main__':
     from exceptions import DevKeyNotFoundError
 else:
@@ -43,7 +45,7 @@ class YoutubeVideo:
 
     def __init__(self, json_=None, title="", url="", thumbnails={}, duration="", description=""):
         self.id         = ""
-       	self.title      = title
+        self.title      = title
         self.url        = url
         self.thumbnails = thumbnails
         self.duration   = duration
@@ -163,11 +165,10 @@ class AioYoutubeService(BaseYoutubeAPI):
 
         url = "{}/search/?key={}&q={}&part={}&type={}&maxResults={}".format(__BASE_URL__,
                                                                     self.DEVELOPER_KEY,
-                                                                    q,
+                                                                    urllib.parse.quote(q),
                                                                     part,
                                                                     search_type,
                                                                     max_results)
-
         async with aiohttp.ClientSession() as session:
             response = await session.get(url)
             search_results = await response.json()
@@ -199,10 +200,10 @@ if __name__ == '__main__':
         ayt = AioYoutubeService()
         
         # test search
-        results = await ayt.search(q="super junior blacksuit", 
+        results = await ayt.search(q="d&e lost", 
                                     search_type="video", 
                                     max_results=3, 
-                                    part=['snippet', 'contentDetails'])
+                                    part='snippet')
         print(results)
         for item in results['items']:
             vid = YoutubeVideo().parse(item)
@@ -211,9 +212,9 @@ if __name__ == '__main__':
             dur = result['items'][0]['contentDetails']['duration']
 
         # test get_playlist
-        results = await ayt.get_playlist(max_results=10, playlist_id="PL6GZjIxGO0cOBYqybD7-nNiA-vjF09wpC")
-        for item in results['items']:
-            print(item['snippet']['title'], item['snippet']['resourceId']['videoId'])
+##        results = await ayt.get_playlist(max_results=10, playlist_id="PL6GZjIxGO0cOBYqybD7-nNiA-vjF09wpC")
+##        for item in results['items']:
+##            print(item['snippet']['title'], item['snippet']['resourceId']['videoId'])
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
