@@ -6,6 +6,8 @@
 Python wrapper for youtube data api v3. Simple *asynchronous* wrapper to get youtube video or playlist data.
 The purpose of this project is to make it easier for developers to extract data from YouTube.
 
+- [Youtube Data API v3 documentations](https://developers.google.com/youtube/v3/docs)
+
 ## Requirements
 - Python 3.x
 - [Get Google API' Credential 'API KEY'](https://developers.google.com/youtube/registering_an_application)
