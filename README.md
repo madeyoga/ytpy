@@ -8,16 +8,12 @@ The purpose of this project is to make it easier for developers to extract data 
 
 ## Requirements
 - Python 3.x
-- [FFmpeg](https://www.ffmpeg.org/download.html)
 - [Get Google API' Credential 'API KEY'](https://developers.google.com/youtube/registering_an_application)
 
 ## Dependencies
-- google-api-python-client
-- google-auth
-- google-auth-httplib2
-- oauth2client
+- urllib
+- asyncio
 - aiohttp
-- [youtube-dl](https://github.com/rg3/youtube-dl)
 
 ## Usage
 ### Get Project
