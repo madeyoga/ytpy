@@ -29,7 +29,8 @@ class BaseYoutubeAPI:
         try:
             if __name__ == '__main__':
                 import config
-            else: from . import config
+            else:
+                from . import config
             return config.DEVELOPER_KEY
         except DevKeyNotFoundError as e:
             raise DevKeyNotFoundError("environment key 'DEVELOPER_KEY' not found.", e)
@@ -87,22 +88,3 @@ class AioYoutubeService(BaseYoutubeAPI):
             response = await session.get(url)
             search_results = await response.json()
         return search_results
-
-# TESTS
-if __name__ == '__main__':
-    async def main():
-        ayt = AioYoutubeService()
-        
-        # test search
-        results = await ayt.search(q="d&e lost", 
-                                    search_type="video", 
-                                    max_results=3, 
-                                    part='snippet')
-        print(results)
-        for item in results['items']:
-            result = await ayt.get_detail(item['id']['videoId'])
-            print(result)
-            break
-
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
