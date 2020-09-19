@@ -40,6 +40,8 @@ ayt = AioYoutubeService(session)
 
 # you can also pass it on dev_key param.
 ayt = AioYoutubeService(session, dev_key='replace me')
+
+session.close()
 ```
 
 ### Basic Usage: Search Video by `Search Key`
@@ -60,6 +62,8 @@ async def main():
   # test search
   results = await ayt.search(q="kpop song", search_type="video", max_results=3)
   print(results['items'][0])
+  
+  session.close()
 ```
 
 ### Example Asynchronous
