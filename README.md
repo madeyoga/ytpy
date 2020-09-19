@@ -31,11 +31,15 @@ The purpose of this project is to make it easier for developers to extract data 
 Use `AioYoutubeService` object for asynchronous tasks.
 You can pass your api key on `dev_key` param when building the object or just set your api key on environment variable named `DEVELOPER_KEY` and `AioYoutubeService` object will get it for you.
 ```py
+import aiohttp
+
+session = aiohttp.ClientSession()
+
 # will get your api key from environment (named DEVELOPER_KEY).
-ayt = AioYoutubeService()
+ayt = AioYoutubeService(session)
 
 # you can also pass it on dev_key param.
-ayt = AioYoutubeService(dev_key='replace me')
+ayt = AioYoutubeService(session, dev_key='replace me')
 ```
 
 ### Basic Usage: Search Video by `Search Key`
@@ -49,7 +53,10 @@ params:
 Example `Search` method
 ```py
 async def main():
-  ayt = AioYoutubeService(dev_key='<replace-me>')
+  session = aiohttp.ClientSession()
+  
+  ayt = AioYoutubeService(session, dev_key='<replace-me>')
+  
   # test search
   results = await ayt.search(q="kpop song", search_type="video", max_results=3)
   print(results['items'][0])
