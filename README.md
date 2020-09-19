@@ -18,10 +18,7 @@ The purpose of this project is to make it easier for developers to extract data 
 - aiohttp
 
 ### Install
-- Clone project
-- `cd` to project directory. 
-- Run command
-```pip install .```
+```pip install --upgrade ytpy```
 
 ### Run Test Code
 - On project root. run command:
