@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name="ytpy",
-    version="18.09.2020",
+    version="19.09.2020",
     packages=find_packages(),
 
     # Project uses reStructuredText, so ensure that the docutils get
@@ -17,7 +17,7 @@ setup(
     },
 
     # metadata to display on PyPI
-    author="madeyoga",
+    author="yeogaa",
     author_email="yeogaa02@gmail.com",
     description="Python asynchronous wrapper for youtube data api v3.",
     keywords="youtube-api-v3 python youtube-search asynchronous",
