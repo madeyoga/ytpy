@@ -1,17 +1,9 @@
-import asyncio
-import aiohttp
-import urllib
-
-if __name__ == '__main__':
-    from exceptions import DevKeyNotFoundError
-else:
-    from .exceptions import DevKeyNotFoundError
-
-__BASE_URL__ = 'https://www.googleapis.com/youtube/v3'
+from .utils import UrlApi
+from .exceptions import DevKeyNotFoundError
 
 class BaseYoutubeAPI:
     """Base Youtube API Client.
-    Handles users credentials API key.
+    Handles users credentials API key & URL.
     """
 
     def __init__(self, dev_key=''):
@@ -22,6 +14,8 @@ class BaseYoutubeAPI:
         else:
             self.DEVELOPER_KEY = self.get_credential_key()
 
+        self.url_api = UrlApi(self.DEVELOPER_KEY)
+
     @staticmethod
     def get_credential_key():
         """Get credentials api key from os environment.
@@ -29,22 +23,18 @@ class BaseYoutubeAPI:
         """
 
         try:
-            if __name__ == '__main__':
-                import config
-            else:
-                from . import config
-            return config.DEVELOPER_KEY
+            from . import config
         except DevKeyNotFoundError as e:
             raise DevKeyNotFoundError("environment key 'DEVELOPER_KEY' not found.", e)
+
+        return config.DEVELOPER_KEY
 
 class AioYoutubeService(BaseYoutubeAPI):
     """Asynchronous youtube service client"""
 
-    @staticmethod
-    async def create_session():
-        return aiohttp.ClientSession()
-
-    def __init__(self, dev_key=''):
+    def __init__(self, aiohttp_client, dev_key=''):
+        self.session = aiohttp_client
+            
         super(AioYoutubeService, self).__init__(dev_key=dev_key)
 
     async def search(self, q='', search_type='video', part='snippet', 
@@ -60,24 +50,19 @@ class AioYoutubeService(BaseYoutubeAPI):
         returns a json response from youtube data api v3.
         """
 
-        url = "{}/search/?key={}&q={}&part={}&type={}&maxResults={}".format(__BASE_URL__,
-                                                                    self.DEVELOPER_KEY,
-                                                                    urllib.parse.quote(q),
-                                                                    part,
-                                                                    search_type,
-                                                                    max_results)
-        async with aiohttp.ClientSession() as session:
-            response = await session.get(url)
-            search_results = await response.json()
+        url = self.url_api.get_search_url(q, part, search_type, max_results)
+        
+        response = await self.session.get(url)
+        search_results = await response.json()
         return search_results
 
     async def get_detail(self, video_id=""):
-        request_url = "{}/videos?id={}&part=contentDetails&key={}".format(__BASE_URL__,
-                                                                          video_id,
-                                                                          self.DEVELOPER_KEY)
-        async with aiohttp.ClientSession() as session:
-            response = await session.get(request_url)
-            search_results = await response.json()
+        """Get detail by video id"""
+        
+        url = self.url_api.get_detail_url(video_id)
+        
+        response = await self.session.get(url)
+        search_results = await response.json()
         return search_results
     
     async def get_playlist(self, part="snippet", max_results=7, playlist_id="", playlist_url=""):
@@ -85,12 +70,8 @@ class AioYoutubeService(BaseYoutubeAPI):
         get playlist from a given playlist_id or playlist_url.
         """
     
-        url = "{}/playlistItems?key={}&part={}&maxResults={}&playlistId={}".format(__BASE_URL__,
-                                                                                   self.DEVELOPER_KEY,
-                                                                                   part,
-                                                                                   max_results,
-                                                                                   playlist_id)
-        async with aiohttp.ClientSession() as session:
-            response = await session.get(url)
-            search_results = await response.json()
+        url = self._url_api.get_playlist_url(playlist_id, part, max_results, playlist_url)
+        
+        response = await self.session.get(url)
+        search_results = await response.json()
         return search_results
