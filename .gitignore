@@ -1,2 +1,4 @@
 __pycache__/
 video/
+dist/
+*.egg-info/
