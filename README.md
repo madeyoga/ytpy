@@ -15,10 +15,12 @@ The purpose of this project is to make it easier for developers to extract data 
 
 ## Dependencies
 - urllib
+
+### For examples & tests
 - asyncio
 - aiohttp
 
-### Install
+## Install
 ```pip install --upgrade ytpy```
 
 ### Run Test Code
@@ -65,4 +67,4 @@ async def main():
 ```
 
 ### Example Asynchronous
-Check [examples/](https://github.com/madeyoga/ytpy/tree/master/examples) folder for the full code example 
+Check [examples](https://github.com/madeyoga/ytpy/tree/master/examples) for the full code example 
