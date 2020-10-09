@@ -21,7 +21,9 @@ The purpose of this project is to make it easier for developers to extract data 
 - aiohttp
 
 ## Install
-```pip install --upgrade ytpy```
+```bash 
+pip install --upgrade ytpy
+```
 
 ### Run Test Code
 - On project root. run command:
