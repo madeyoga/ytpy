@@ -70,8 +70,16 @@ class AioYoutubeService(BaseYoutubeAPI):
         get playlist from a given playlist_id or playlist_url.
         """
     
-        url = self._url_api.get_playlist_url(playlist_id, part, max_results, playlist_url)
+        url = self.url_api.get_playlist_url(playlist_id, part, max_results, playlist_url)
         
+        response = await self.session.get(url)
+        search_results = await response.json()
+        return search_results
+
+    async def get_related_video(self, video_id, part="snippet", max_results=7):
+
+        url = self.url_api.get_related_url(video_id, part, max_results)
+
         response = await self.session.get(url)
         search_results = await response.json()
         return search_results

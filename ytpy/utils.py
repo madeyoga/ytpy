@@ -27,3 +27,10 @@ class UrlApi:
                                                                max_results,
                                                                playlist_id)
         return self.__playlist_url + params
+
+    def get_related_url(self, videoid, part, max_results):
+
+        params = '&part={}&relatedToVideoId={}&maxResults={}&type=video'.format(part,
+                                                                                videoid,
+                                                                                max_results)
+        return self.__search_url + params
