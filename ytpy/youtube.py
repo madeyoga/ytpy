@@ -56,10 +56,10 @@ class AioYoutubeService(BaseYoutubeAPI):
         search_results = await response.json()
         return search_results
 
-    async def get_detail(self, video_id=""):
+    async def get_video_detail(self, video_id="", parts=['contentDetails', 'snippet']):
         """Get detail by video id"""
         
-        url = self.url_api.get_detail_url(video_id)
+        url = self.url_api.get_detail_url(video_id, parts)
         
         response = await self.session.get(url)
         search_results = await response.json()

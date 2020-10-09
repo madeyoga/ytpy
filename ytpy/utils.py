@@ -16,9 +16,9 @@ class UrlApi:
                                                               max_results)
         return self.__search_url + params
 
-    def get_detail_url(self, video_id):
+    def get_detail_url(self, video_id, parts):
 
-        params = '&id={}&part=contentDetails'.format(video_id)
+        params = '&id={}&part={}'.format(video_id, ','.join(parts))
         return self.__detail_url + params
 
     def get_playlist_url(self, playlist_id, part="snippet", max_results=5, playlist_url=""):
