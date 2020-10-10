@@ -68,5 +68,5 @@ async def main():
   session.close()
 ```
 
-### Example Asynchronous
+### Examples
 Check [examples](https://github.com/madeyoga/ytpy/tree/master/examples) for the full code example 
