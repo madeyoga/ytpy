@@ -70,3 +70,9 @@ async def main():
 
 ### Examples
 Check [examples](https://github.com/madeyoga/ytpy/tree/master/examples) for the full code example 
+
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests/examples as appropriate.
