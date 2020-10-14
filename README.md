@@ -46,7 +46,7 @@ ayt = AioYoutubeService(session, dev_key='replace me')
 session.close()
 ```
 
-### Basic Usage: Search Video by `Search Key`
+### Basic Usage: Search Video by `Keywords`
 https://developers.google.com/youtube/v3/docs/search
 
 params:
@@ -80,7 +80,7 @@ loop.run_until_complete(main(loop))
 loop.close()
 ```
 
-### Basic Usage: Search Video by `Search Key` (Without api key)
+### Basic Usage: Search Video by `Keywords` (Without api key)
 
 params:
 - `q`, string. Search key. default: empty string.
