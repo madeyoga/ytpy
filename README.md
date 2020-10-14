@@ -29,8 +29,8 @@ pip install --upgrade ytpy
 - On project root. run command:
 ```python ytpy/test/test_import.py```
 
-### Asynchronous Youtube Service Object
-Use `AioYoutubeService` object for asynchronous tasks.
+### Asynchronous Youtube API V3 Client
+Use `AioYoutubeService` or `YoutubeApiV3Client` for asynchronous tasks.
 You can pass your api key on `dev_key` param when building the object or just set your api key on environment variable named `DEVELOPER_KEY` and `AioYoutubeService` object will get it for you.
 ```py
 import aiohttp
