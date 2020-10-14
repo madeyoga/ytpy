@@ -11,7 +11,7 @@ The purpose of this project is to make it easier for developers to extract data 
 
 ## Requirements
 - Python 3.x
-- [Get Google API' Credential 'API KEY'](https://developers.google.com/youtube/registering_an_application)
+- [Get Google API' Credential 'API KEY'](https://developers.google.com/youtube/registering_an_application) for `YoutubeApiV3Client`
 
 ## Dependencies
 - urllib
