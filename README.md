@@ -56,16 +56,55 @@ params:
 
 Example `Search` method
 ```py
-async def main():
-  session = aiohttp.ClientSession()
-  
-  ayt = AioYoutubeService(session, dev_key='<replace-me>')
-  
-  # test search
-  results = await ayt.search(q="kpop song", search_type="video", max_results=3)
-  print(results['items'][0])
-  
-  session.close()
+import os
+import asyncio
+import aiohttp
+from ytpy import YoutubeApiV3Client
+
+async def main(loop):
+    session = aiohttp.ClientSession()
+    
+    # Pass the aiohttp client session
+    ayt = YoutubeApiV3Client(session, dev_key=os.environ["DEVELOPER_KEY"])
+    
+    # test search
+    results = await ayt.search(q="d&e lost", 
+                               search_type="video",
+                               max_results=1)
+    print(results)
+
+    await session.close()
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main(loop))
+loop.close()
+```
+
+### Basic Usage: Search Video by `Search Key` (Without api key)
+
+params:
+- `q`, string. Search key. default: empty string.
+- `max_results`
+
+Example `Search` method (Without api key)
+```py
+from ytpy import YoutubeClient
+import asyncio
+import aiohttp
+
+async def main(loop):
+    session = aiohttp.ClientSession()
+
+    client = YoutubeClient(session)
+    
+    response = await client.search('chico love letter')
+    print(response)
+
+    await session.close()
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main(loop))
+
 ```
 
 ### Examples
