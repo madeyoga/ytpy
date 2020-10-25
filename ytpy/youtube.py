@@ -154,7 +154,7 @@ class YoutubeClient:
         response = await self.session.get(url)
         page_content = await response.text()
         
-        start_feature = 'window["ytInitialData"]'
+        start_feature = 'ytInitialData'
 
         # + len(start_feature) + 3 to get rid of the start_feature & the " = "
         start_index = (page_content.index(start_feature) + len(start_feature) + 3)
