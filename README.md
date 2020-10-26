@@ -29,24 +29,7 @@ pip install --upgrade ytpy
 - On project root. run command:
 ```python ytpy/test/test_import.py```
 
-### Asynchronous Youtube API V3 Client
-Use `AioYoutubeService` or `YoutubeApiV3Client` for asynchronous tasks.
-You can pass your api key on `dev_key` param when building the object or just set your api key on environment variable named `DEVELOPER_KEY` and `AioYoutubeService` object will get it for you.
-```py
-import aiohttp
-
-session = aiohttp.ClientSession()
-
-# will get your api key from environment (named DEVELOPER_KEY).
-ayt = AioYoutubeService(session)
-
-# you can also pass it on dev_key param.
-ayt = AioYoutubeService(session, dev_key='replace me')
-
-session.close()
-```
-
-### Basic Usage: Search Video by `Keywords`
+### Basic Usage: Search Video by `Keywords` with YoutubeApiV3Client
 https://developers.google.com/youtube/v3/docs/search
 
 params:
@@ -80,7 +63,7 @@ loop.run_until_complete(main(loop))
 loop.close()
 ```
 
-### Basic Usage: Search Video by `Keywords` (Without api key)
+### Basic Usage: Search Video by `Keywords` with Scraper Client
 
 params:
 - `q`, string. Search key. default: empty string.
