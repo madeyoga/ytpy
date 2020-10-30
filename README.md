@@ -5,7 +5,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MadeYoga/aio-ytpy/issues)
 [![Discord Badge](https://discordapp.com/api/guilds/458296099049046018/embed.png)](https://discord.gg/Y8sB4ay)
 
-Python wrapper for youtube data api v3. Simple *asynchronous* wrapper to get youtube video or playlist data.
+Python wrapper to extract youtube data. Simple *asynchronous* wrapper to get youtube video or playlist data.
 The purpose of this project is to make it easier for developers to extract data from YouTube.
 
 - [Youtube Data API v3 documentations](https://developers.google.com/youtube/v3/docs)
