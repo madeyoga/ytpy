@@ -3,3 +3,4 @@ video/
 dist/
 *.egg-info/
 .vscode
+.idea
