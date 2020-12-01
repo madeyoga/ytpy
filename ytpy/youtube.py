@@ -1,7 +1,7 @@
 from .utils import UrlApi
 from .exceptions import DevKeyNotFoundError
 import json
-
+import urllib
 
 class BaseYoutubeAPI:
     """Base Youtube API Client.
@@ -151,6 +151,8 @@ class YoutubeClient:
 
     async def search(self, q, max_results=5, language="en"):
 
+        q = urllib.parse.quote(q)
+        
         url = f"https://www.youtube.com/results?hl={language}&persist_hl=1&search_query={q}"
 
         response = await self.session.get(url)
