@@ -7,7 +7,7 @@ async def main(loop):
 
     client = YoutubeClient(session)
     
-    response = await client.search('chico love letter')
+    response = await client.search('yoasobi', language='en')
     print(response)
 
     await session.close()
