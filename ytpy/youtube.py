@@ -2,6 +2,8 @@ from .utils import UrlApi
 from .exceptions import DevKeyNotFoundError
 import json
 import urllib
+import os
+
 
 class BaseYoutubeAPI:
     """Base Youtube API Client.
@@ -25,66 +27,11 @@ class BaseYoutubeAPI:
         """
 
         try:
-            from . import config
+            developer_key = os.environ["DEVELOPER_KEY"]
         except DevKeyNotFoundError as e:
-            raise DevKeyNotFoundError("environment key 'DEVELOPER_KEY' not found.", e)
+            raise DevKeyNotFoundError("environment var 'DEVELOPER_KEY' not found.", e)
 
-        return config.DEVELOPER_KEY
-
-
-class AioYoutubeService(BaseYoutubeAPI):
-    """Asynchronous youtube service client"""
-
-    def __init__(self, aiohttp_client, dev_key=''):
-        self.session = aiohttp_client
-
-        super(AioYoutubeService, self).__init__(dev_key=dev_key)
-
-    async def search(self, q='', search_type='video', part='snippet',
-                     max_results=7, video_category="10"):
-        """Youtube search
-        url: GET {BASE_URL}/search/?q=q&part=part&
-        params:
-        q       ->  stands for query, search key. default: empty string.
-        part    ->  snippet, contentDetails, player, statistics, status. default: snippet
-        type    ->  types: 'video', 'playlist', 'channel'. default: video.
-        video_category -> 10: Music.
-        
-        returns a json response from youtube data api v3.
-        """
-
-        url = self.url_api.get_search_url(q, part, search_type, max_results)
-
-        response = await self.session.get(url)
-        search_results = await response.json()
-        return search_results
-
-    async def get_video_detail(self, video_id="", parts=['contentDetails', 'snippet']):
-        """Get detail by video id"""
-
-        url = self.url_api.get_detail_url(video_id, parts)
-
-        response = await self.session.get(url)
-        search_results = await response.json()
-        return search_results
-
-    async def get_playlist(self, part="snippet", max_results=7, playlist_id="", playlist_url=""):
-        """fetch playlist items
-        get playlist from a given playlist_id or playlist_url.
-        """
-
-        url = self.url_api.get_playlist_url(playlist_id, part, max_results, playlist_url)
-
-        response = await self.session.get(url)
-        search_results = await response.json()
-        return search_results
-
-    async def get_related_video(self, video_id, part="snippet", max_results=7):
-        url = self.url_api.get_related_url(video_id, part, max_results)
-
-        response = await self.session.get(url)
-        search_results = await response.json()
-        return search_results
+        return developer_key
 
 
 class YoutubeDataApiV3Client(BaseYoutubeAPI):
@@ -93,7 +40,7 @@ class YoutubeDataApiV3Client(BaseYoutubeAPI):
     def __init__(self, aiohttp_client, dev_key=''):
         self.session = aiohttp_client
 
-        super(AioYoutubeService, self).__init__(dev_key=dev_key)
+        super(YoutubeDataApiV3Client, self).__init__(dev_key=dev_key)
 
     async def search(self, q='', search_type='video', part='snippet',
                      max_results=7, video_category="10"):
@@ -146,14 +93,27 @@ class YoutubeDataApiV3Client(BaseYoutubeAPI):
 class YoutubeClient:
     """Asynchronous youtube client (without api key)"""
 
-    def __init__(self, aiohttp_client):
+    def __init__(self, aiohttp_client, yt_music_key=None):
         self.session = aiohttp_client
 
-    async def search(self, q, max_results=5, language="en"):
+        self.WATCH_URL_PREFIX = "https://www.youtube.com/watch?v="
 
-        q = urllib.parse.quote(q)
-        
-        url = f"https://www.youtube.com/results?hl={language}&persist_hl=1&search_query={q}"
+        self.YT_URI_PREFIX = "https://www.youtube.com/results?"
+
+        self.YT_MUSIC_URI_PREFIX = "https://music.youtube.com/youtubei/v1/search?"
+        self.YT_MUSIC_KEY = yt_music_key
+        self.YT_MUSIC_PAYLOAD_STRING = '{{"context":{{"client":{{"clientName":"WEB_REMIX",' \
+                                       '"clientVersion":"0.1"}}}},"query":"{query}",' \
+                                       '"params":"Eg-KAQwIARAAGAAgACgAMABqChADEAQQCRAFEAo="}}'
+
+    async def search(self, q, max_results=5, language="en"):
+        params = {
+            "search_query": urllib.parse.quote(q),
+            "hl": language,
+            "persist_hl": 1
+        }
+
+        url = self.YT_URI_PREFIX + urllib.parse.urlencode(params)
 
         response = await self.session.get(url)
         page_content = await response.text()
@@ -196,3 +156,16 @@ class YoutubeClient:
                     break
 
         return results
+
+    async def search_music(self, q):
+        headers = {"Referer": "music.youtube.com"}
+        params = {
+            "alt": "json",
+            "key": self.YT_MUSIC_KEY
+        }
+
+        response = await self.session.post(self.YT_MUSIC_URI_PREFIX + urllib.parse.urlencode(params),
+                                           data=self.YT_MUSIC_PAYLOAD_STRING.format(query=q),
+                                           headers=headers)
+
+        return await response.json()
