@@ -14,9 +14,6 @@ The purpose of this project is to make it easier for developers to extract data 
 
 ## Dependencies
 - urllib
-
-### For examples & tests
-- asyncio
 - aiohttp
 
 ## Install
@@ -24,11 +21,36 @@ The purpose of this project is to make it easier for developers to extract data 
 pip install --upgrade ytpy
 ```
 
-### Run Test Code
-- On project root. run command:
-```python ytpy/test/test_import.py```
+### Basic Usage 
 
-### Basic Usage: Search Video by `Keywords` with YoutubeApiV3Client
+#### Search Video by `Keywords` without api key.
+
+params:
+- `q`, string. Search key. default: empty string.
+- `max_results`
+
+Example `Search` method (Without api key)
+```py
+from ytpy import YoutubeClient
+import asyncio
+import aiohttp
+
+async def main(loop):
+    session = aiohttp.ClientSession()
+
+    client = YoutubeClient(session)
+    
+    response = await client.search('chico love letter')
+    print(response)
+
+    await session.close()
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main(loop))
+
+```
+
+#### Search Video by `Keywords` with YoutubeApiV3Client
 https://developers.google.com/youtube/v3/docs/search
 
 params:
@@ -62,32 +84,6 @@ loop.run_until_complete(main(loop))
 loop.close()
 ```
 
-### Basic Usage: Search Video by `Keywords` with Scraper Client
-
-params:
-- `q`, string. Search key. default: empty string.
-- `max_results`
-
-Example `Search` method (Without api key)
-```py
-from ytpy import YoutubeClient
-import asyncio
-import aiohttp
-
-async def main(loop):
-    session = aiohttp.ClientSession()
-
-    client = YoutubeClient(session)
-    
-    response = await client.search('chico love letter')
-    print(response)
-
-    await session.close()
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main(loop))
-
-```
 
 ### Examples
 Check [examples](https://github.com/madeyoga/ytpy/tree/master/examples) for the full code example 
