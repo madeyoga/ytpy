@@ -2,6 +2,7 @@ from ytpy import YoutubeClient
 import asyncio
 import aiohttp
 import os
+from json import dumps
 
 
 async def main(loop):
@@ -10,7 +11,7 @@ async def main(loop):
     client = YoutubeClient(session, yt_music_key=os.environ["YT_MUSIC_KEY"])
 
     response = await client.search_music(q='black suit')
-    print(response)
+    print(dumps(response, indent=2))
 
     await session.close()
 
