@@ -168,35 +168,31 @@ class YoutubeClient:
                                            data=self.YT_MUSIC_PAYLOAD_STRING.format(query=q),
                                            headers=headers)
 
-        results=[]
-        response=await response.json()
+        results = []
+        response = await response.json()
 
-        if('error' in response):
+        if 'error' in response:
             return results
 
-        videos=response["contents"]["sectionListRenderer"]["contents"][0]
+        videos = response["contents"]["sectionListRenderer"]["contents"][0]
 
         if "musicShelfRenderer" in videos:
             for video in videos["musicShelfRenderer"]["contents"]:
-                res={}
-                temp=[]
-                overlay=(video['musicResponsiveListItemRenderer']["overlay"])
-                res['videoId']=(overlay["musicItemThumbnailOverlayRenderer"]["content"]
-                               ['musicPlayButtonRenderer']["playNavigationEndpoint"]['watchEndpoint']['videoId'])
+                res = {}
+                overlay = (video['musicResponsiveListItemRenderer']["overlay"])
+                res['videoId'] = (overlay["musicItemThumbnailOverlayRenderer"]["content"]
+                ['musicPlayButtonRenderer']["playNavigationEndpoint"]['watchEndpoint']['videoId'])
 
-                res['title']=(overlay["musicItemThumbnailOverlayRenderer"]["content"]['musicPlayButtonRenderer']["accessibilityPauseData"]
-                             ["accessibilityData"]["label"]).split()
+                res['title'] = (overlay["musicItemThumbnailOverlayRenderer"]["content"]['musicPlayButtonRenderer']
+                ["accessibilityPauseData"]["accessibilityData"]["label"]).split()
                 res['title'].pop(0)
-                res['title']=" ".join(res['title'])
+                res['title'] = " ".join(res['title'])
 
-                flexColumns=(video['musicResponsiveListItemRenderer']["flexColumns"][1]["musicResponsiveListItemFlexColumnRenderer"]
-                            ["text"]["runs"])
+                flex_columns = (video['musicResponsiveListItemRenderer']["flexColumns"][1][
+                    "musicResponsiveListItemFlexColumnRenderer"]["text"]["runs"])
 
-                for text in flexColumns:
-                    temp.append(text['text'])
-
-                res['author']=temp.pop(0)
-                res['duration']=temp.pop()
+                res['author'] = flex_columns.pop(0)['text']
+                res['duration'] = flex_columns.pop()['text']
 
                 results.append(res)
 
