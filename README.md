@@ -50,7 +50,7 @@ loop.run_until_complete(main(loop))
 
 ```
 
-#### Search Video by `Keywords` with YoutubeApiV3Client
+#### Search Video by `Keywords` with YoutubeDataApiV3Client
 https://developers.google.com/youtube/v3/docs/search
 
 params:
@@ -63,13 +63,13 @@ Example `Search` method
 import os
 import asyncio
 import aiohttp
-from ytpy import YoutubeApiV3Client
+from ytpy import YoutubeDataApiV3Client
 
 async def main(loop):
     session = aiohttp.ClientSession()
     
     # Pass the aiohttp client session
-    ayt = YoutubeApiV3Client(session, dev_key=os.environ["DEVELOPER_KEY"])
+    ayt =  YoutubeDataApiV3Client(session, dev_key=os.environ["DEVELOPER_KEY"])
     
     # test search
     results = await ayt.search(q="d&e lost", 
