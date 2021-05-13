@@ -1,13 +1,13 @@
 import os
 import asyncio
 import aiohttp
-from ytpy import AioYoutubeService
+from ytpy import YoutubeDataApiV3Client
 
 async def main(loop):
     session = aiohttp.ClientSession()
     
     # Pass the aiohttp client session
-    ayt = AioYoutubeService(session, dev_key=os.environ["DEVELOPER_KEY"])
+    ayt = YoutubeDataApiV3Client(session, dev_key=os.environ["DEVELOPER_KEY"])
     
     # test search
     results = await ayt.search(q="d&e lost", 
