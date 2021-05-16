@@ -21,7 +21,7 @@ The purpose of this project is to make it easier for developers to extract data 
 pip install --upgrade ytpy
 ```
 
-### Basic Usage 
+### Usage 
 
 #### Search Video by `Keywords` without api key.
 
