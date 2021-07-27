@@ -10,7 +10,7 @@ The purpose of this project is to make it easier for developers to extract data 
 
 ## Requirements
 - Python 3.x
-- [Get Google API' Credential 'API KEY'](https://developers.google.com/youtube/registering_an_application) for `YoutubeApiV3Client` only
+- [Get Google API' Credential 'API KEY'](https://developers.google.com/youtube/registering_an_application) for `YoutubeDataApiV3Client` only
 
 ## Dependencies
 - urllib
@@ -21,7 +21,7 @@ The purpose of this project is to make it easier for developers to extract data 
 pip install --upgrade ytpy
 ```
 
-### Basic Usage 
+### Usage 
 
 #### Search Video by `Keywords` without api key.
 
@@ -50,7 +50,7 @@ loop.run_until_complete(main(loop))
 
 ```
 
-#### Search Video by `Keywords` with YoutubeApiV3Client
+#### Search Video by `Keywords` with YoutubeDataApiV3Client
 https://developers.google.com/youtube/v3/docs/search
 
 params:
@@ -63,13 +63,13 @@ Example `Search` method
 import os
 import asyncio
 import aiohttp
-from ytpy import YoutubeApiV3Client
+from ytpy import YoutubeDataApiV3Client
 
 async def main(loop):
     session = aiohttp.ClientSession()
     
     # Pass the aiohttp client session
-    ayt = YoutubeApiV3Client(session, dev_key=os.environ["DEVELOPER_KEY"])
+    ayt =  YoutubeDataApiV3Client(session, dev_key=os.environ["DEVELOPER_KEY"])
     
     # test search
     results = await ayt.search(q="d&e lost", 
