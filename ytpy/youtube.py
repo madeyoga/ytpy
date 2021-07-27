@@ -3,7 +3,6 @@ from .exceptions import DevKeyNotFoundError
 import json
 import urllib
 import os
-import re
 
 
 class BaseYoutubeAPI:
