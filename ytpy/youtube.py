@@ -3,6 +3,7 @@ from .exceptions import DevKeyNotFoundError
 import json
 import urllib
 import os
+import re
 
 
 class BaseYoutubeAPI:
@@ -106,7 +107,7 @@ class YoutubeClient:
                                        '"clientVersion":"0.1"}}}},"query":"{query}",' \
                                        '"params":"Eg-KAQwIARAAGAAgACgAMABqChADEAQQCRAFEAo="}}'
 
-    async def search(self, q, max_results=5, language="en"):
+    async def search(self, q, max_results=5, language="en", raw=False):
         params = {
             "search_query": urllib.parse.quote(q),
             "hl": language,
@@ -117,6 +118,9 @@ class YoutubeClient:
 
         response = await self.session.get(url)
         page_content = await response.text()
+
+        if raw:
+            return page_content
 
         start_feature = 'ytInitialData'
 
