@@ -98,6 +98,11 @@ class YoutubeClient:
 
         self.WATCH_URL_PREFIX = "https://www.youtube.com/watch?v="
         self.YT_URI_PREFIX = "https://www.youtube.com/results?"
+        self.YT_MUSIC_URI_PREFIX = "https://music.youtube.com/youtubei/v1/search?"
+        self.YT_MUSIC_KEY = yt_music_key
+        self.YT_MUSIC_PAYLOAD_STRING = '{{"context":{{"client":{{"clientName":"WEB_REMIX",' \
+                                       '"clientVersion":"0.1"}}}},"query":"{query}",' \
+                                       '"params":"Eg-KAQwIARAAGAAgACgAMABqChADEAQQCRAFEAo="}}'
 
     async def search(self, q, max_results=5, language="en", raw=False):
         params = {
@@ -153,3 +158,42 @@ class YoutubeClient:
 
         return results
 
+    async def search_music(self, q):
+        headers = {"Referer": "music.youtube.com"}
+        params = {
+            "alt": "json",
+            "key": self.YT_MUSIC_KEY
+        }
+
+        response = await self.session.post(self.YT_MUSIC_URI_PREFIX + urllib.parse.urlencode(params),
+                                           data=self.YT_MUSIC_PAYLOAD_STRING.format(query=q),
+                                           headers=headers)
+
+        results = []
+        response = await response.json()
+
+        if 'error' in response:
+            return results
+
+        videos = response['contents']['tabbedSearchResultsRenderer']['tabs'][0]['tabRenderer']['content']['sectionListRenderer']['contents'][0]
+        if "musicShelfRenderer" in videos:
+            for video in videos["musicShelfRenderer"]["contents"]:
+                res = {}
+                overlay = (video['musicResponsiveListItemRenderer']["overlay"])
+                res['videoId'] = (overlay["musicItemThumbnailOverlayRenderer"]["content"]
+                ['musicPlayButtonRenderer']["playNavigationEndpoint"]['watchEndpoint']['videoId'])
+
+                res['title'] = (overlay["musicItemThumbnailOverlayRenderer"]["content"]['musicPlayButtonRenderer']
+                ["accessibilityPauseData"]["accessibilityData"]["label"]).split()
+                res['title'].pop(0)
+                res['title'] = " ".join(res['title'])
+
+                flex_columns = (video['musicResponsiveListItemRenderer']["flexColumns"][1][
+                    "musicResponsiveListItemFlexColumnRenderer"]["text"]["runs"])
+
+                res['author'] = flex_columns.pop(0)['text']
+                res['duration'] = flex_columns.pop()['text']
+
+                results.append(res)
+
+        return results
