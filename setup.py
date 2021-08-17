@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
     
 setup(
     name="ytpy",
-    version="2021.7.27",
+    version="2021.8.17",
     packages=find_packages(),
 
     # Project uses reStructuredText, so ensure that the docutils get
