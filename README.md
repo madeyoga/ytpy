@@ -23,13 +23,6 @@ pip install --upgrade ytpy
 
 ### Usage 
 
-#### Search Video by `Keywords` without api key.
-
-params:
-- `q`, string. Search key. default: empty string.
-- `max_results`
-
-Example `Search` method (Without api key)
 ```py
 from ytpy import YoutubeClient
 import asyncio
@@ -40,7 +33,7 @@ async def main(loop):
 
     client = YoutubeClient(session)
     
-    response = await client.search('chico love letter')
+    response = await client.search('ringtone')
     print(response)
 
     await session.close()
@@ -50,7 +43,7 @@ loop.run_until_complete(main(loop))
 
 ```
 
-#### Search Video by `Keywords` with YoutubeDataApiV3Client
+### Search Video by `Keywords` using YoutubeDataApiV3Client
 https://developers.google.com/youtube/v3/docs/search
 
 params:
